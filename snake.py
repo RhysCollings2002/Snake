@@ -73,7 +73,7 @@ def move_left():
                 head_location[1] -= 1
                 found = True
                 break
-            elif board[count][in_count] == 1 and in_count == 0:
+            elif (board[count][in_count] == 1 and in_count == 0):
                 game_over()
                 break
             else:
@@ -91,7 +91,7 @@ def move_up():
                 head_location[0] -= 1
                 found = True
                 break
-            elif board[count][in_count] == 1 and count == 0:
+            elif (board[count][in_count] == 1 and count == 0):
                 game_over()
                 break
             else:
@@ -109,7 +109,7 @@ def move_down():
                 head_location[0] += 1
                 found = True
                 break
-            elif board[count][in_count] == 1 and count == len(board) - 1:
+            elif (board[count][in_count] == 1 and count == len(board) - 1):
                 game_over()
                 break
             else:
@@ -117,7 +117,22 @@ def move_down():
         count+=1
 
 def move_right():
-    print("right")
+    count = 0
+    found = False
+    while count < len(board) and (not found):
+        in_count = 0
+        while in_count < len(board[count]):
+            if board[count][in_count] == 1 and in_count < len(board[count]) - 1 and board[count][in_count+1] <= 0:
+                board[count][in_count+1] = 1
+                head_location[1] += 1
+                found = True
+                break
+            elif (board[count][in_count] == 1 and in_count == len(board[count]) - 1):
+                game_over()
+                break
+            else:
+                in_count+=1
+        count+=1
 
 def game_over():
     print("YOU LOSE")
@@ -135,6 +150,7 @@ def after_move():
             board[head_location[0]][head_location[1]] = 1
             in_count+=1
         count+=1
+    get_apple()
     display()
     wait()
 
@@ -151,7 +167,11 @@ def wait():
         count+=1
     move()
     
-
+def get_apple():
+    global length
+    if board[apple_location[0]][apple_location[1]] != -1:
+        length += 1
+        create_apple()
 
 
 
