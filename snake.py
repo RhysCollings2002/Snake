@@ -27,10 +27,28 @@ def get_start_input():
     
     
 
+#def old_display():
+#    for line in board:
+#        print(line)
+#    print("----------------------------------------------")
+
 def display():
+    print("\n\n\n\n\n\n\n\n\n\n\n")
     for line in board:
-        print(line)
-    print("----------------------------------------------")
+        level = ""
+        for space in line:
+            if space == 0:
+                level += "( )"
+            elif space == -1:
+                level += " 0 "
+            elif space == 1:
+                level += "[O]"
+            else:
+                level += "[-]"
+        print(level)
+    
+    
+        
 
 def create_head():
     x=random.randint(0, len(board)-1)
@@ -150,9 +168,12 @@ def after_move():
             board[head_location[0]][head_location[1]] = 1
             in_count+=1
         count+=1
-    get_apple()
-    display()
-    wait()
+    if body_collision() and length > 1:
+        game_over()
+    else:
+        get_apple()
+        display()
+        wait()
 
 def between_moves():
     global moving
@@ -172,6 +193,24 @@ def get_apple():
     if board[apple_location[0]][apple_location[1]] != -1:
         length += 1
         create_apple()
+
+def body_collision():
+    count = 0
+    two = False
+    while count < len(board) and (not two):
+        in_count = 0
+        while in_count < len(board[count]):
+            if board[count][in_count] == 2:
+                two = True
+                break
+            else:
+                in_count+=1
+        count+=1
+    return not two
+
+
+
+    
 
 
 
